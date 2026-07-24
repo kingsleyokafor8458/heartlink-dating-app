@@ -1,0 +1,17 @@
+# backend
+backend/target/
+backend/.mvn/
+*.class
+
+# frontend
+frontend/node_modules/
+frontend/dist/
+
+# env
+.env
+.env.local
+
+# ide/os
+.idea/
+.vscode/
+.DS_Store
