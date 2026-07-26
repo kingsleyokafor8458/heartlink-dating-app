@@ -51,6 +51,10 @@ public class User {
     @Builder.Default
     private List<String> roles = List.of("USER");
 
+    // Password reset — token is single-use and time-limited (see AuthService)
+    private String resetToken;
+    private Instant resetTokenExpiresAt;
+
     @CreatedDate
     private Instant createdAt;
 

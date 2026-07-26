@@ -5,6 +5,7 @@ import com.heartlink.dto.UserDto;
 import com.heartlink.model.Match;
 import com.heartlink.service.MatchService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +33,17 @@ public class MatchController {
     @GetMapping("/matches/profiles")
     public List<UserDto> matchProfiles(@AuthenticationPrincipal String userId) {
         return matchService.getMatchProfiles(userId);
+    }
+
+    @GetMapping("/likes/received")
+    public List<UserDto> likesReceived(@AuthenticationPrincipal String userId) {
+        return matchService.getUsersWhoLikedMe(userId);
+    }
+
+    @PostMapping("/swipe/undo")
+    public ResponseEntity<UserDto> undoSwipe(@AuthenticationPrincipal String userId) {
+        return matchService.undoLastSwipe(userId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.noContent().build());
     }
 }

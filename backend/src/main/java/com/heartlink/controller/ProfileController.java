@@ -1,6 +1,7 @@
 package com.heartlink.controller;
 
 import com.heartlink.dto.ProfileUpdateRequest;
+import com.heartlink.dto.SearchFilters;
 import com.heartlink.dto.UserDto;
 import com.heartlink.service.ProfileService;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,13 @@ public class ProfileController {
 
     @GetMapping("/browse")
     public List<UserDto> browse(@AuthenticationPrincipal String userId,
-                                 @RequestParam(defaultValue = "20") int limit) {
-        return profileService.getBrowseFeed(userId, limit);
+                                 @RequestParam(defaultValue = "20") int limit,
+                                 @RequestParam(required = false) String query,
+                                 @RequestParam(required = false) Integer minAge,
+                                 @RequestParam(required = false) Integer maxAge,
+                                 @RequestParam(required = false) String city,
+                                 @RequestParam(required = false) String interest) {
+        SearchFilters filters = new SearchFilters(query, minAge, maxAge, city, interest);
+        return profileService.getBrowseFeed(userId, limit, filters);
     }
 }

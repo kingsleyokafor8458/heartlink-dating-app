@@ -19,6 +19,38 @@ jwt:
 cors:
   allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
 
+storage:
+  # local -> saves files to disk on this server, served back over HTTP (good for dev/testing)
+  # s3    -> saves files to an AWS S3 bucket (use this in production/AWS deployment)
+  provider: ${STORAGE_PROVIDER:local}
+  local:
+    upload-dir: ${LOCAL_UPLOAD_DIR:uploads}
+    base-url: ${LOCAL_BASE_URL:http://localhost:8080/uploads}
+  s3:
+    bucket: ${S3_BUCKET:}
+    region: ${S3_REGION:us-east-1}
+    # Access key/secret are picked up automatically by the AWS SDK from
+    # standard env vars (AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY) or an
+    # instance role when running on EC2/ECS — no need to put them here.
+
+app:
+  # Used to build the password reset link that gets emailed out.
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  # Where contact-form submissions get forwarded to.
+  contact-email: ${CONTACT_EMAIL:no-reply@heartlink.app}
+
+spring.mail:
+  host: ${SMTP_HOST:}
+  port: ${SMTP_PORT:587}
+  username: ${SMTP_USERNAME:}
+  password: ${SMTP_PASSWORD:}
+  properties:
+    mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
