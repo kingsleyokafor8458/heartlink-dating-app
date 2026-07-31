@@ -1,4 +1,4 @@
-name: Heartlink CI
+name: Heartlink CI/CD
 
 on:
   push:
@@ -38,3 +38,11 @@ jobs:
       - name: Build frontend
         working-directory: frontend
         run: npm run build
+
+  docker:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
