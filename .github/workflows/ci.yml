@@ -58,3 +58,7 @@ jobs:
           docker build \
             -t kingsleyokafor8458/heartlink-backend:${{ github.sha }} \
             ./backend
+
+      - name: Push backend Docker image
+        run: |
+          docker push kingsleyokafor8458/heartlink-backend:${{ github.sha }}
